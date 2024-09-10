@@ -36,9 +36,9 @@ spring:
             - Path=/books/** # ???? ??? ??? ????.
           filters:
             - name: CircuitBreaker
-              - args:
-                  name: catalogCircuitBreaker
-                  fallbackUrl: forward:/catalog-fallback # ??? ?? ??? ? ??? ? URL? ??
+              args:
+                name: catalogCircuitBreaker
+                fallbackUri: forward:/catalog-fallback # ??? ?? ??? ? ??? ? URL? ??
         - id: order-route
           uri: ${ORDER_SERVICE_URL:http://localhost:9002} # ?ORDER_SERVICE_URL? ???? ??? : ?? ?? ?? ????? ??
           predicates:
@@ -49,10 +49,6 @@ spring:
                 name: orderCircuitBreaker
   lifecycle:
     timeout-per-shutdown-phase: 15s # ??? ?? ??? 15?? ??
-
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
 
 resilience4j:
   circuitbreaker:
@@ -66,3 +62,8 @@ resilience4j:
     configs:
       default: # ?? ?? ??? ?? ?? ??
         timeoutDuration: 5s # ???? ?? (?)
+
+logging:
+  level:
+    io.github.resilience4j: DEBUG
+    org.springframework.cloud.gateway: DEBUG
