@@ -11,6 +11,7 @@ spring:
   cloud:
     gateway:
       default-filters:
+        - SaveSession # ??? ???? ???? ?? ?? ???? ????.
         - name: Retry
           args:
             retries: 3
@@ -53,6 +54,11 @@ spring:
             - name: CircuitBreaker # ?? ????? ?? ??? ??? ??
               args:
                 name: orderCircuitBreaker
+  session:
+    store-type: redis
+    timeout: 10m
+    redis:
+      namespace: polar:edge
   redis:
     connect-timeout: 2s
     host: localhost
