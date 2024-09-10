@@ -8,6 +8,11 @@ server:
 spring:
   application:
     name: edge-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s # ??? ?? ??? 15?? ??
+  config:
+    import: "optional:configserver:"
+
   cloud:
     gateway:
       default-filters:
@@ -54,6 +59,7 @@ spring:
             - name: CircuitBreaker # ?? ????? ?? ??? ??? ??
               args:
                 name: orderCircuitBreaker
+
   session:
     store-type: redis
     timeout: 10m
@@ -64,9 +70,6 @@ spring:
     host: localhost
     port: 6379
     timeout: 1s
-
-  lifecycle:
-    timeout-per-shutdown-phase: 15s # ??? ?? ??? 15?? ??
 
 resilience4j:
   circuitbreaker:
