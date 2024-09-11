@@ -1,3 +1,13 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "gateway"
+  endpoint:
+    gateway:
+      enabled: true
+
 server:
   port: 9000 # ??? ??? ???? ??
   netty:
@@ -44,6 +54,7 @@ spring:
       routes: # ??? ?? ??
         - id: catalog-route # ??? ID
           uri: ${CATALOG_SERVICE_URL:http://localhost:9001}
+#          uri: http://localhost:9001
           predicates:
             - Path=/books/** # ???? ??? ??? ????.
           filters:
@@ -53,6 +64,7 @@ spring:
                 fallbackUri: forward:/catalog-fallback # ??? ?? ??? ? ??? ? URL? ??
         - id: order-route
           uri: ${ORDER_SERVICE_URL:http://localhost:9002} # ?ORDER_SERVICE_URL? ???? ??? : ?? ?? ?? ????? ??
+#          uri: http://localhost:9002
           predicates:
             - Path=/orders/**
           filters:
@@ -87,4 +99,4 @@ resilience4j:
 logging:
   level:
     io.github.resilience4j: DEBUG
-    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO
