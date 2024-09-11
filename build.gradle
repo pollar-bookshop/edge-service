@@ -1,7 +1,11 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.3'
-	id 'io.spring.dependency-management' version '1.1.6'
+	// 	Spring Cloud Gateway는 Spring Boot 2.x 을 기반으로 구축되었기 때문에 3.x 버전에서는 의도한 대로 작동을 안함.
+	// 예) 라우팅 안됨, /actuator/gateway/routes에서 정보를 확인할 수 없음 등..
+//	id 'org.springframework.boot' version '3.3.3'
+//	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.springframework.boot' version '2.7.18'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'com.polarbookshop'
@@ -28,6 +32,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	// 라우트 확인을 위해 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
