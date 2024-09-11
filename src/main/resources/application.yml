@@ -24,7 +24,7 @@ spring:
             series: SERVER_ERROR # 500 ??? ???? ???
             exceptions: java.io.IOException, java.util.concurrent.TimeoutException # ??? ??? ??? ??? ???
             backoff: # ???? firstBackoff (factor^n) ??? ??? ??
-              firstBackOf: 50ms
+              firstBackOff: 50ms
               maxBackOff: 500ms
               factor: 2
               basedOnPreviousValue: false
