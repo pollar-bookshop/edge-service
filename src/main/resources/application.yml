@@ -23,6 +23,14 @@ spring:
   config:
     import: "optional:configserver:"
 
+  gateway:
+    routes:
+      - id: spa-route
+        uri: ${SPA_URL:http://localhost:9004}
+        # 루트 엔드포인트, 그리고 SPA의 정적 리소스와 일치하는 경로들의 목록이다.
+        predicates:
+          - Path=/,/*.css,/*.js,/favicon.ico
+
   security:
     oauth2:
       client:
