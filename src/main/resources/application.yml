@@ -23,6 +23,23 @@ spring:
   config:
     import: "optional:configserver:"
 
+  security:
+    oauth2:
+      client:
+        registration:
+          # 스프링 보안에서 클라이언트 등록을 식별하는 이름 ("registrationId"라고도 부른다)
+          keycloak:
+            # 키클록에 정의된 OAuth2 클라이언트 식별자
+            client-id: edge-service
+            # 클라이언트가 키클록과 인증하기 위해 사용하는 공유 시크릿
+            client-secret: polar-keycloak-secret
+            # 클라이언트가 접근 권한을 갖기를 원하는 영역의 목록. aponid영역은 OAuth2에서 OIDC 인증을 수행한다.
+            scope: openid
+        provider:
+          keycloak:
+            # 특정 영역에 대한 OAuth2와 OIDC 관련 모든 엔드포인트의 정보를 제공하는 키클록 URL
+            issuer-uri: http://localhost:8080/realms/PolarBookshop
+
   cloud:
     gateway:
       default-filters:
