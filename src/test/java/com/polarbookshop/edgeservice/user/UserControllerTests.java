@@ -47,6 +47,7 @@ public class UserControllerTests {
                             expectedUser.firstName());
                     builder.claim(StandardClaimNames.FAMILY_NAME,
                             expectedUser.lastName());
+                    builder.claim("roles", expectedUser.roles()); // 모의 ID 토큰에 roles 클래임을 추가한다.
                 });
     }
 }
