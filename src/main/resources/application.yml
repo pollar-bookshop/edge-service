@@ -69,10 +69,10 @@ spring:
           max-life-time: 60s # ?? ??? ?? ?? ??
       routes: # ??? ?? ??
         - id: spa-route
-            uri: ${SPA_URL:http://localhost:9004}
-            # 루트 엔드포인트, 그리고 SPA의 정적 리소스와 일치하는 경로들의 목록이다.
-            predicates:
-              - Path=/,/*.css,/*.js,/favicon.ico
+          uri: ${SPA_URL:http://localhost:9004}
+          # 루트 엔드포인트, 그리고 SPA의 정적 리소스와 일치하는 경로들의 목록이다.
+          predicates:
+            - Path=/,/*.css,/*.js,/favicon.ico
         - id: catalog-route # ??? ID
           uri: ${CATALOG_SERVICE_URL:http://localhost:9001}
 #          uri: http://localhost:9001
