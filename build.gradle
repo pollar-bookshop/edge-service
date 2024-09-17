@@ -37,11 +37,13 @@ dependencies {
 	// 스프링 보안 OAuth2 클라이언트 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+	// Only on Apple Silicon. Why it's necessary: https://github.com/netty/netty/issues/11020
+	 runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.101.Final:osx-aarch_64'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
-	// 스프링 보안 OAuth2 클라이언트 의존성 추가
-	testImplementation 'org.springframework.security:spring-secutiry-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {
