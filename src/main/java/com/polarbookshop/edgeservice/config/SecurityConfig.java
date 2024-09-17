@@ -12,6 +12,10 @@ import org.springframework.security.oauth2.client.registration.ReactiveClientReg
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
+import org.springframework.security.web.server.csrf.CsrfToken;
+import org.springframework.web.server.WebFilter;
+import reactor.core.publisher.Mono;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
@@ -35,7 +39,21 @@ public class SecurityConfig {
                 // 로그아웃이 성공적으로 완료되는 경우에 대한 사용자 지정 핸들러를 정의
                 .logout(logout -> logout.logoutSuccessHandler(
                         oidcLogoutSuccessHandler(clientRegistrationRepository)))
+                // 프런트엔드와 CSRF 토큰을 교환하기 위해 쿠키 기반 방식을 사용
+                .csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()))
                 .build();
+    }
+
+    // CsrfToken 리액티브 스트림을 구독하고 이 토큰의 값을 올바르게 추출하기 위한 목적만을 갖는 필터
+    @Bean
+    WebFilter csrfWebFilter() {
+        return (exchange, chain) -> {
+            exchange.getResponse().beforeCommit(() -> Mono.defer(() -> {
+                Mono<CsrfToken> csrfToken = exchange.getAttribute(CsrfToken.class.getName());
+                return csrfToken != null ? csrfToken.then() : Mono.empty();
+            }));
+            return chain.filter(exchange);
+        };
     }
 
     private ServerLogoutSuccessHandler oidcLogoutSuccessHandler(ReactiveClientRegistrationRepository clientRegistrationRepository) {
