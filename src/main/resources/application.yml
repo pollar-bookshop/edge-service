@@ -43,6 +43,7 @@ spring:
     gateway:
       default-filters:
         - SaveSession # ??? ???? ???? ?? ?? ???? ????.
+        - TokenRelay # 다른 서비스를 호출할 때 엑세스 토큰 전달을 활성화한다.
         - name: Retry
           args:
             retries: 3
