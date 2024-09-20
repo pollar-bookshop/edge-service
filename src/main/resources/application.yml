@@ -1,13 +1,3 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-          - "gateway"
-  endpoint:
-    gateway:
-      enabled: true
-
 server:
   port: 9000 # ??? ??? ???? ??
   netty:
@@ -123,3 +113,15 @@ logging:
     circuitbreaker: io.github.resilience4j, org.springframework.cloud.circuitcreaker
   level:
     circuitbreaker: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway, health
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
