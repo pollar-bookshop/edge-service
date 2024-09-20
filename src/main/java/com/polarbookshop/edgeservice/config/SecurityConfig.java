@@ -35,6 +35,7 @@ public class SecurityConfig {
             ReactiveClientRegistrationRepository clientRegistrationRepository) {
         return http
                 .authorizeExchange(exchange -> exchange
+                        .pathMatchers("/actuator/**").permitAll()
                         // SPA의 정적 리소스에 대한 인증되지 않은 엑세스 허용
                         .pathMatchers("/", "/*.css", "/*.js", "/favicon.ico").permitAll()
                         // 카탈로그의 도서에 대한 인증되지 않은 엑세스 허용
