@@ -118,7 +118,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: gateway, health
+#        include: configprops, env, gateway, health, heapdump, info, loggers, mappings, prometheus
+        include: gateway, health, prometheus
   endpoint:
     health:
       show-details: always
@@ -128,6 +129,13 @@ management:
       group:
         readiness:
           include: readinessState,redis
+#  info:
+#    env:
+#      enabled: true
+#    java:
+#      enabled: true
+#    os:
+#      enabled: true
   metrics:
     tags:
       application: ${spring.application.name}
